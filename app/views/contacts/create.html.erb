@@ -1,0 +1,20 @@
+<h3>Contact successfully added! </h3>
+
+<h3>
+  <h4>ID: <%= @contact.id%></h4>
+  <h4>Name: <%= @contact.first_name %> <%= @contact.last_name %></h4>
+  <h4>Email: <%= @contact.email %></h4>
+  <h4>Phone Number: <%= @contact.phone_number %></h4>
+</h3>
+
+<div>
+  <%= link_to 'Edit this contact', "/contacts/#{@contact.id}/edit" %>
+</div>
+
+<div>
+  <%= link_to 'Add a new contact', '/contacts/new' %>
+</div>
+
+<div>
+  <%= link_to 'Return to list of contacts', '/contacts' %>
+</div>
