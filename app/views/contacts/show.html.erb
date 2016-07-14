@@ -1,9 +1,9 @@
-<h3>
-  <h4>ID: <%= @contact.id%></h4>
-  <h4>Name: <%= @contact.first_name %> <%= @contact.last_name %></h4>
-  <h4>Email: <%= @contact.email %></h4>
-  <h4>Phone Number: <%= @contact.phone_number %></h4>
-</h3>
+<div class='each-contact'>
+  <div class='full-name'><%= @contact.full_name %></div>
+  <div class='contact-info'>Email: <%= @contact.email %></div>
+  <div class='contact-info'>Phone Number: <%= @contact.japanese_phone_number %></div>
+  <div class='date-field'>Updated on: <%= Contact.friendly_strftime(@contact.updated_at) %></div>
+</div>
 
 <div>
   <%= link_to 'Edit this contact', "/contacts/#{@contact.id}/edit" %>

@@ -8,13 +8,13 @@
       <h4><%= link_to contact.id, "/contacts/#{contact.id}" %> </h4>
     </div>
     <div class='col-md-4'
-      <h4><%= contact.first_name %> <%= contact.last_name %></h4>
+      <h4><%= contact.full_name %></h4>
     </div>
     <div class='col-md-4'
       <h4><%= contact.email %></h4>
     </div>
     <div class='col-md-3'
-      <h4><%= contact.phone_number %></h4>
+      <h4><%= contact.japanese_phone_number %></h4>
     </div>
   </div>
 <% end %>

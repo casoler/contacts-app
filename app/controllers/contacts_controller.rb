@@ -15,6 +15,8 @@ class ContactsController < ApplicationController
       phone_number: params[:phone_number]
     )
     @contact.save
+
+    redirect_to "/contacts/#{@contact.id}"
   end
 
   def show
