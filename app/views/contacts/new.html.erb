@@ -6,6 +6,10 @@
     <%= text_field_tag :first_name, '', class:"form-control" %>
   </div>
   <div class="form-group">
+    <%= label_tag :middle_name, 'Middle Name' %>
+    <%= text_field_tag :middle_name, '', class:"form-control" %>
+  </div>
+  <div class="form-group">
     <%= label_tag :last_name, 'Last Name' %>
     <%= text_field_tag :last_name, '', class:"form-control" %>
   </div>
@@ -16,6 +20,10 @@
   <div class="form-group">
     <%= label_tag :phone_number, 'Phone Number' %>
     <%= text_field_tag :phone_number, '', class:"form-control" %>
+  </div>
+  <div class="form-group">
+    <%= label_tag :bio, 'Bio' %>
+    <%= text_area_tag :bio, @contact.bio, class:"form-control" %>
   </div>
 
   <%= submit_tag 'Create a New Contact', class:"btn btn-default" %>
