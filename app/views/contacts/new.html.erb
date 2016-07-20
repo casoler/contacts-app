@@ -14,6 +14,10 @@
     <%= text_field_tag :last_name, '', class:"form-control" %>
   </div>
   <div class="form-group">
+    <%= label_tag :address, 'Address' %>
+    <%= text_field_tag :address, '', class:"form-control" %>
+  </div>
+  <div class="form-group">
     <%= label_tag :email, 'Email' %>
     <%= text_field_tag :email, '', class:"form-control" %>
   </div>
@@ -23,7 +27,7 @@
   </div>
   <div class="form-group">
     <%= label_tag :bio, 'Bio' %>
-    <%= text_area_tag :bio, @contact.bio, class:"form-control" %>
+    <%= text_area_tag :bio, '', class:"form-control" %>
   </div>
 
   <%= submit_tag 'Create a New Contact', class:"btn btn-default" %>

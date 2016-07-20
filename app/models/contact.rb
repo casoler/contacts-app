@@ -11,4 +11,8 @@ class Contact < ActiveRecord::Base
   def japanese_phone_number
     '+81 ' + phone_number
   end
+
+  def self.find_all_johns
+    Contact.where(first_name: 'John')  #find all
+  end
 end
