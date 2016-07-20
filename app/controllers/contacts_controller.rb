@@ -1,7 +1,12 @@
 class ContactsController < ApplicationController
 
   def index
-    @contacts = Contact.all.sort_by(&:last_name)
+    if current_user
+      @contacts = Contact.where(user_id: current_user.id).sort_by(&:last_name)
+    else
+      flash[:warning] = 'Please log in.'
+      redirect_to '/login'
+    end
   end
 
   def new
@@ -18,7 +23,8 @@ class ContactsController < ApplicationController
       phone_number: params[:phone_number],
       bio: params[:bio],
       latitude: coordinates[0],
-      longitude: coordinates[1]
+      longitude: coordinates[1],
+      user_id: current_user.id
     )
     @contact.save
 
@@ -26,7 +32,16 @@ class ContactsController < ApplicationController
   end
 
   def show
-    @contact = Contact.find_by(id: params[:id])
+    if current_user
+      @contact = Contact.find_by(id: params[:id], user_id: current_user.id)
+      unless @contact
+        flash[:warning] = 'You are unauthorized to view this record.'
+        redirect_to '/contacts'
+      end
+    else
+      flash[:warning] = 'Please log in.'
+      redirect_to '/login'
+    end
   end
 
   def edit
