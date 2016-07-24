@@ -4,6 +4,15 @@
   <div class='contact-info'>Phone Number: <%= @contact.japanese_phone_number %></div>
   <p class='bio-info'><%= @contact.bio %></p>
   <div class='date-field'>Updated on: <%= Contact.friendly_strftime(@contact.updated_at) %></div>
+
+  <div>
+    <h5>Belongs to groups:</h5>
+    <ul>
+      <% @contact.groups.each do |group| %>
+        <li><%= group.name %></li>
+      <% end %>
+    </ul>
+  </div>
 </div>
 
 <div>

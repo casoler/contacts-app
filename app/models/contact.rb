@@ -1,4 +1,8 @@
 class Contact < ActiveRecord::Base
+  belongs_to :user
+  has_many :contact_groups
+  has_many :groups, through: :contact_groups
+
 
   def self.friendly_strftime(adate)
     adate.strftime('%A, %d %b %Y %l:%M %p')

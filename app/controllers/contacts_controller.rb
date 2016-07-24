@@ -2,7 +2,16 @@ class ContactsController < ApplicationController
 
   def index
     if current_user
-      @contacts = Contact.where(user_id: current_user.id).sort_by(&:last_name)
+      @contacts = current_user.contacts
+      if params[:group]
+        my_contacts = []
+        @contacts.each do |contact|
+          if contact.groups.any? {|group| group.name == params[:group]}
+            my_contacts << contact
+          end
+        end
+        @contacts = my_contacts
+      end
     else
       flash[:warning] = 'Please log in.'
       redirect_to '/login'
@@ -14,7 +23,7 @@ class ContactsController < ApplicationController
 
   def create
     coordinates = Geocoder.coordinates(params[:address])
-    p coordinates
+
     @contact = Contact.new(
       first_name: params[:first_name],
       middle_name: params[:middle_name],
