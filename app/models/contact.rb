@@ -3,6 +3,8 @@ class Contact < ActiveRecord::Base
   has_many :contact_groups
   has_many :groups, through: :contact_groups
 
+  validates :first_name, :last_name, :email, presence: true
+  validates :email, uniqueness: true
 
   def self.friendly_strftime(adate)
     adate.strftime('%A, %d %b %Y %l:%M %p')

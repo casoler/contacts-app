@@ -2,15 +2,11 @@ class ContactsController < ApplicationController
 
   def index
     if current_user
-      @contacts = current_user.contacts
       if params[:group]
-        my_contacts = []
-        @contacts.each do |contact|
-          if contact.groups.any? {|group| group.name == params[:group]}
-            my_contacts << contact
-          end
-        end
-        @contacts = my_contacts
+        selected_group = Group.find_by(id: params[:group])
+        @contacts = selected_group.contacts.where(user_id: current_user.id)
+      else 
+        @contacts = current_user.contacts
       end
     else
       flash[:warning] = 'Please log in.'
@@ -19,10 +15,18 @@ class ContactsController < ApplicationController
   end
 
   def new
+    @contact = Contact.new
   end
 
   def create
     coordinates = Geocoder.coordinates(params[:address])
+    if coordinates
+      computed_latitude = coordinates[0]
+      computed_longitude = coordinates[1]
+    else
+      computed_latitude = nil
+      computed_longitude = nil
+    end
 
     @contact = Contact.new(
       first_name: params[:first_name],
@@ -31,13 +35,16 @@ class ContactsController < ApplicationController
       email: params[:email],
       phone_number: params[:phone_number],
       bio: params[:bio],
-      latitude: coordinates[0],
-      longitude: coordinates[1],
+      latitude: computed_latitude,
+      longitude: computed_longitude,
       user_id: current_user.id
     )
-    @contact.save
-
-    redirect_to "/contacts/#{@contact.id}"
+    if @contact.save
+      flash[:success] = 'Contact successfully created.'
+      redirect_to "/contacts/#{@contact.id}"
+    else
+      render 'new'
+    end
   end
 
   def show
@@ -58,16 +65,31 @@ class ContactsController < ApplicationController
   end
 
   def update
+    coordinates = Geocoder.coordinates(params[:address])
+    if coordinates
+      computed_latitude = coordinates[0]
+      computed_longitude = coordinates[1]
+    else
+      computed_latitude = nil
+      computed_longitude = nil
+    end
+
     @contact = Contact.find_by(id: params[:id])
-    @contact.update(
+    if @contact.update(
       first_name: params[:first_name],
       middle_name: params[:middle_name],
       last_name: params[:last_name],
       email: params[:email],
       phone_number: params[:phone_number],
+      latitude: computed_latitude,
+      longitude: computed_longitude,
       bio: params[:bio]
-    )
-    redirect_to "/contacts/#{@contact.id}"
+      )
+      flash[:success] = 'Contact successfully saved.'
+      redirect_to "/contacts/#{@contact.id}"
+    else
+      render 'edit'
+    end
   end
 
   def destroy

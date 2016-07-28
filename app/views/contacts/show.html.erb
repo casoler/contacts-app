@@ -13,6 +13,8 @@
       <% end %>
     </ul>
   </div>
+
+  <div>Groups: <%= @contact.groups.pluck(:name).join(", ") %></div>
 </div>
 
 <div>
